@@ -1,42 +1,92 @@
+#include "gtest/gtest.h"
 
-#include "catch.hpp"
+class Handsetsoft {
+public:
+  Handsetsoft() {}
+  virtual ~Handsetsoft() {}
+  virtual void run() = 0;
+};
 
-#include "bridge.cpp" // Включаем наш исходный код
+class HandsetGame : public Handsetsoft {
+public:
+  HandsetGame() : Handsetsoft() {}
+  virtual ~HandsetGame() {}
+  virtual void run() {
+    cout << "run game" << endl;
+  }
+};
 
-TEST_CASE("HandsetGame") {
-    HandsetBrand* iphone = new Iphone();
-    iphone->setHandsetsoft(new HandsetGame());
+class HandsetAddressList : public Handsetsoft {
+public:
+  HandsetAddressList() : Handsetsoft() {}
+  virtual ~HandsetAddressList() {}
+  virtual void run() {
+    cout << "run addressList" << endl;
+  }
+};
 
-    SECTION("Run HandsetGame") {
-        iphone->run();
-        // Проверяем, что вывод соответствует ожидаемому
-        // Здесь можно использовать мок-объект или перенаправить вывод в поток
-    }
+class HandsetBrand {
+public:
+  HandsetBrand() {}
+  virtual ~HandsetBrand() { delete soft; }
+  virtual void setHandsetsoft(Handsetsoft* soft) {
+    this->soft = soft;
+  }
+  virtual void run() {}
+
+protected:
+  Handsetsoft* soft;
+};
+
+class Iphone : public HandsetBrand {
+public:
+  Iphone() : HandsetBrand() {}
+  virtual ~Iphone() {}
+  virtual void run() {
+    soft->run();
+  }
+};
+
+class Android : public HandsetBrand {
+public:
+  Android() : HandsetBrand() {}
+  virtual ~Android() {}
+  virtual void run() {
+    soft->run();
+  }
+};
+
+TEST(BridgePattern, IphoneGame) {
+  // Arrange
+  HandsetBrand* iphone = new Iphone();
+  iphone->setHandsetsoft(new HandsetGame());
+
+  // Act
+  iphone->run();
+
+  // Assert
+  ASSERT_EQ(cout.str(), "run gamen");
 }
 
-TEST_CASE("HandsetAddressList") {
-    HandsetBrand* android = new Android();
-    android->setHandsetsoft(new HandsetAddressList());
+TEST(BridgePattern, AndroidAddressList) {
+  // Arrange
+  HandsetBrand* android = new Android();
+  android->setHandsetsoft(new HandsetAddressList());
 
-    SECTION("Run HandsetAddressList") {
-        android->run();
-        // Проверяем, что вывод соответствует ожидаемому
-    }
+  // Act
+  android->run();
+
+  // Assert
+  ASSERT_EQ(cout.str(), "run addressListn");
 }
 
-TEST_CASE("SetHandsetsoft") {
-    HandsetBrand* brand = new Iphone();
+TEST(BridgePattern, IphoneSetHandsetsoft) {
+  // Arrange
+  HandsetBrand* iphone = new Iphone();
 
-    SECTION("Set HandsetGame") {
-        brand->setHandsetsoft(new HandsetGame());
-        brand->run();
-        // Проверяем, что вывод соответствует ожидаемому
-    }
+  // Act
+  iphone->setHandsetsoft(new HandsetAddressList());
 
-    SECTION("Set HandsetAddressList") {
-        brand->setHandsetsoft(new HandsetAddressList());
-        brand->run();
-        // Проверяем, что вывод соответствует ожидаемому
-    }
+  // Assert
+  ASSERT_EQ(iphone->soft, new HandsetAddressList());
 }
-
