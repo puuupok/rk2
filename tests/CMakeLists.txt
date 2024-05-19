@@ -11,7 +11,7 @@ FetchContent_MakeAvailable(googletest)
 
 # Add test source files
 set(TEST_SOURCES
-    bridge.cpp
+    bridge_test.cpp
 )
 
 # Link GoogleTest to the tests
