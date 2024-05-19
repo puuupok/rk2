@@ -1,22 +1,26 @@
-# Include FetchContent module
-include(FetchContent)
+cmake_minimum_required(VERSION 3.10)
+project(bridge_tests)
 
-# Download and unpack GoogleTest at configure time
-FetchContent_Declare(
-  googletest
-  URL https://github.com/google/googletest/archive/release-1.11.0.zip
+set(CMAKE_CXX_STANDARD 11)
+
+# Включите эту строку, если используете Catch2 как подмодуль Git
+# add_subdirectory(path/to/catch2)
+
+
+enable_testing()
+
+add_executable(bridge_tests
+    bridge.cpp
+    tests.cpp
 )
-# Make available Googletest
-FetchContent_MakeAvailable(googletest)
 
-# Add test source files
-set(TEST_SOURCES
-    Singleton_test.cpp
+target_include_directories(bridge_tests
+    PRIVATE
+    ${CATCH_INCLUDE_DIR}
 )
 
-# Link GoogleTest to the tests
-add_executable(runTests ${TEST_SOURCES})
-target_link_libraries(runTests gtest gtest_main)
+add_test(
+    NAME bridge_tests
+    COMMAND bridge_tests
+)
 
-# Register tests
-add_test(NAME runTests COMMAND runTests)
