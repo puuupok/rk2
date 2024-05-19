@@ -1,0 +1,30 @@
+name: CMake Build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{runner.workspace}}/build
+    
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{runner.workspace}}/build
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=Release
+    
+    - name: Build
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cmake --build . --config Release
+    
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: BridgeExample
+        path: ${{runner.workspace}}/build/BridgeExample
+
