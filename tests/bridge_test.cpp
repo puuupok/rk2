@@ -1,37 +1,37 @@
-#include "handset.h"
 #include <gtest/gtest.h>
+#include "bridge.cpp" 
 
-TEST(HandsetTest, IphoneRunsGame) {
-  HandsetBrand* iphone = new Iphone();
-  iphone->setHandsetsoft(new HandsetGame());
-  std::streambuf* oldCout = std::cout.rdbuf();
-  std::stringstream ss;
-  std::cout.rdbuf(ss.rdbuf());
-  iphone->run();
-  std::cout.rdbuf(oldCout);
-  EXPECT_EQ(ss.str(), "run game\n");
-  delete iphone;
+TEST(bridgeTest, GameRunTest) {
+    HandsetBrand* iphone = new Iphone();
+    iphone->setHandsetsoft(new HandsetGame());
+    testing::internal::CaptureStdout();
+    iphone->run();
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "run game\n");
+    delete iphone;
 }
 
-TEST(HandsetTest, AndroidRunsAddressList) {
-  HandsetBrand* android = new Android();
-  android->setHandsetsoft(new HandsetAddressList());
-  std::streambuf* oldCout = std::cout.rdbuf();
-  std::stringstream ss;
-  std::cout.rdbuf(ss.rdbuf());
-  android->run();
-  std::cout.rdbuf(oldCout);
-  EXPECT_EQ(ss.str(), "run addressList\n");
-  delete android;
+TEST(bridgeTest, AddressListRunTest) {
+    HandsetBrand* android = new Android();
+    android->setHandsetsoft(new HandsetAddressList());
+    testing::internal::CaptureStdout();
+    android->run();
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "run addressList\n");
+    delete android;
 }
 
-TEST(HandsetTest, NoSoftwareThrowsError) {
-  HandsetBrand* android = new Android();
-  EXPECT_DEATH(android->run(), "");
-  delete android;
+TEST(bridgeTest, NullHandsetSoftTest) {
+    HandsetBrand* brand = new Iphone();
+    testing::internal::CaptureStdout();
+    brand->run();
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "");
+    delete brand;
 }
 
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+int main(int argc, char** argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
+

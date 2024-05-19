@@ -1,18 +1,22 @@
-cmake_minimum_required(VERSION 3.10)
-project(Bridge)
-
-# Google Test
+# Include FetchContent module
 include(FetchContent)
+
+# Download and unpack GoogleTest at configure time
 FetchContent_Declare(
   googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG release-1.11.0
+  URL https://github.com/google/googletest/archive/release-1.11.0.zip
 )
+# Make available Googletest
 FetchContent_MakeAvailable(googletest)
 
-# Sources
-add_executable(brigde bridge.cpp)
+# Add test source files
+set(TEST_SOURCES
+    bridge_test.cpp
+)
 
-# Tests
-add_executable(bridge_test bridge_test.cpp)
-target_link_libraries(bridge_test PRIVATE gtest_main gtest)
+# Link GoogleTest to the tests
+add_executable(runTests ${TEST_SOURCES})
+target_link_libraries(runTests gtest gtest_main)
+
+# Register tests
+add_test(NAME runTests COMMAND runTests)
