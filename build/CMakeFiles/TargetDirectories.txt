@@ -1,0 +1,3 @@
+/home/pupok/DesignPattern/bridge/build/CMakeFiles/BridgeExample.dir
+/home/pupok/DesignPattern/bridge/build/CMakeFiles/edit_cache.dir
+/home/pupok/DesignPattern/bridge/build/CMakeFiles/rebuild_cache.dir
