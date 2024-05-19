@@ -1,92 +1,37 @@
-#include "gtest/gtest.h"
+#include "handset.h"
+#include <gtest/gtest.h>
 
-class Handsetsoft {
-public:
-  Handsetsoft() {}
-  virtual ~Handsetsoft() {}
-  virtual void run() = 0;
-};
-
-class HandsetGame : public Handsetsoft {
-public:
-  HandsetGame() : Handsetsoft() {}
-  virtual ~HandsetGame() {}
-  virtual void run() {
-    cout << "run game" << endl;
-  }
-};
-
-class HandsetAddressList : public Handsetsoft {
-public:
-  HandsetAddressList() : Handsetsoft() {}
-  virtual ~HandsetAddressList() {}
-  virtual void run() {
-    cout << "run addressList" << endl;
-  }
-};
-
-class HandsetBrand {
-public:
-  HandsetBrand() {}
-  virtual ~HandsetBrand() { delete soft; }
-  virtual void setHandsetsoft(Handsetsoft* soft) {
-    this->soft = soft;
-  }
-  virtual void run() {}
-
-protected:
-  Handsetsoft* soft;
-};
-
-class Iphone : public HandsetBrand {
-public:
-  Iphone() : HandsetBrand() {}
-  virtual ~Iphone() {}
-  virtual void run() {
-    soft->run();
-  }
-};
-
-class Android : public HandsetBrand {
-public:
-  Android() : HandsetBrand() {}
-  virtual ~Android() {}
-  virtual void run() {
-    soft->run();
-  }
-};
-
-TEST(BridgePattern, IphoneGame) {
-  // Arrange
+TEST(HandsetTest, IphoneRunsGame) {
   HandsetBrand* iphone = new Iphone();
   iphone->setHandsetsoft(new HandsetGame());
-
-  // Act
+  std::streambuf* oldCout = std::cout.rdbuf();
+  std::stringstream ss;
+  std::cout.rdbuf(ss.rdbuf());
   iphone->run();
-
-  // Assert
-  ASSERT_EQ(cout.str(), "run gamen");
+  std::cout.rdbuf(oldCout);
+  EXPECT_EQ(ss.str(), "run game\n");
+  delete iphone;
 }
 
-TEST(BridgePattern, AndroidAddressList) {
-  // Arrange
+TEST(HandsetTest, AndroidRunsAddressList) {
   HandsetBrand* android = new Android();
   android->setHandsetsoft(new HandsetAddressList());
-
-  // Act
+  std::streambuf* oldCout = std::cout.rdbuf();
+  std::stringstream ss;
+  std::cout.rdbuf(ss.rdbuf());
   android->run();
-
-  // Assert
-  ASSERT_EQ(cout.str(), "run addressListn");
+  std::cout.rdbuf(oldCout);
+  EXPECT_EQ(ss.str(), "run addressList\n");
+  delete android;
 }
 
-TEST(BridgePattern, IphoneSetHandsetsoft) {
-  // Arrange
-  HandsetBrand* iphone = new Iphone();
+TEST(HandsetTest, NoSoftwareThrowsError) {
+  HandsetBrand* android = new Android();
+  EXPECT_DEATH(android->run(), "");
+  delete android;
+}
 
-  // Act
-  iphone->setHandsetsoft(new HandsetAddressList());
-
-  // Assert
-  ASSERT_EQ(iphone->soft, new HandsetAddressList());
+int main(int argc, char **argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
