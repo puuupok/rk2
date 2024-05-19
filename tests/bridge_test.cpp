@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
 #include <iostream>
-#include <thread>
-#include <vector>
 
+
+// Подключение основного файла bridge.cpp
+#include "bridge.cpp"
 
 // Тест на создание единственного экземпляра без использования потоков
 TEST(BridgeTest, SingleInstanceWithoutThreads) {
@@ -67,6 +68,7 @@ TEST(BridgeTest, MultipleInstancesWithoutThreadSafety) {
     }
 }
 
+int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
