@@ -1,22 +1,23 @@
-cmake_minimum_required(VERSION 3.10)
-
-# Project name
+cmake_minimum_required(VERSION 3.16)
 project(Bridge)
 
-# Set C++ standard
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Include directories
-include_directories(${PROJECT_SOURCE_DIR})
-
-# Add source files
-set(SOURCES
+set(PROJECT_SOURCES
     bridge.cpp
 )
 
-# Add executable
-add_executable(Bridge ${SOURCES})
 
 
+
+add_library(project_lib STATIC ${PROJECT_SOURCES})
+
+
+target_include_directories(project_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+
+add_executable(${PROJECT_NAME} main.cpp)
+target_link_libraries(${PROJECT_NAME} project_lib)
+
+
+enable_testing()
 add_subdirectory(tests)
