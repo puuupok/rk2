@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Project name
-project(Bridge)
+project(bridge)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 23)
@@ -17,7 +17,7 @@ set(SOURCES
 )
 
 # Add executable
-add_executable(Bridge ${SOURCES})
+add_executable(bridge ${SOURCES})
 
 enable_testing()
 
