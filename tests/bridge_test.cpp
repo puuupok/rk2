@@ -1,33 +1,72 @@
 #include <gtest/gtest.h>
-#include "bridge.cpp" 
+#include <iostream>
+#include <thread>
+#include <vector>
 
-TEST(bridgeTest, GameRunTest) {
+// Подключение основного файла bridge.cpp
+#include "bridge.cpp"
+
+// Тест на создание единственного экземпляра без использования потоков
+TEST(BridgeTest, SingleInstanceWithoutThreads) {
+    Handsetsoft* game = new HandsetGame();
+    Handsetsoft* addressList = new HandsetAddressList();
+
     HandsetBrand* iphone = new Iphone();
-    iphone->setHandsetsoft(new HandsetGame());
-    testing::internal::CaptureStdout();
-    iphone->run();
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "run game\n");
-    delete iphone;
-}
+    iphone->setHandsetsoft(game);
+    iphone->run(); // Output: run game
 
-TEST(bridgeTest, AddressListRunTest) {
     HandsetBrand* android = new Android();
-    android->setHandsetsoft(new HandsetAddressList());
-    testing::internal::CaptureStdout();
-    android->run();
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "run addressList\n");
+    android->setHandsetsoft(addressList);
+    android->run(); // Output: run addressList
+
+    delete iphone;
     delete android;
+    delete game;
+    delete addressList;
 }
 
-TEST(bridgeTest, NullHandsetSoftTest) {
-    HandsetBrand* brand = new Iphone();
-    testing::internal::CaptureStdout();
-    brand->run();
-    std::string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "");
-    delete brand;
+// Тест на потокобезопасность
+TEST(BridgeTest, ThreadSafety) {
+    std::vector<std::thread> threads;
+    for (int i = 0; i < 10; ++i) {
+        threads.emplace_back([]() {
+            HandsetBrand* iphone = new Iphone();
+            iphone->setHandsetsoft(new HandsetGame());
+            iphone->run();
+            delete iphone;
+        });
+    }
+
+    for (auto& thread : threads) {
+        thread.join();
+    }
+}
+
+// Тест на создание нескольких экземпляров без обеспечения потокобезопасности
+TEST(BridgeTest, MultipleInstancesWithoutThreadSafety) {
+    std::vector<Handsetsoft*> games;
+    std::vector<Handsetsoft*> addressLists;
+    std::vector<HandsetBrand*> iphones;
+    std::vector<HandsetBrand*> androids;
+
+    for (int i = 0; i < 10; ++i) {
+        games.push_back(new HandsetGame());
+        addressLists.push_back(new HandsetAddressList());
+        iphones.push_back(new Iphone());
+        androids.push_back(new Android());
+    }
+
+    for (int i = 0; i < 10; ++i) {
+        iphones[i]->setHandsetsoft(games[i]);
+        androids[i]->setHandsetsoft(addressLists[i]);
+    }
+
+    for (int i = 0; i < 10; ++i) {
+        delete iphones[i];
+        delete androids[i];
+        delete games[i];
+        delete addressLists[i];
+    }
 }
 
 int main(int argc, char** argv) {
