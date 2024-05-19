@@ -18,6 +18,5 @@ set(SOURCES
 # Add executable
 add_executable(Bridge ${SOURCES})
 
-enable_testing()
 
 add_subdirectory(tests)
