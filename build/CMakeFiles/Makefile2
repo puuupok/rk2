@@ -63,7 +63,7 @@ CMAKE_BINARY_DIR = /home/pupok/DesignPattern/bridge/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/BridgeExample.dir/all
+all: CMakeFiles/Bridge.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -71,34 +71,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/BridgeExample.dir/clean
+clean: CMakeFiles/Bridge.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/BridgeExample.dir
+# Target rules for target CMakeFiles/Bridge.dir
 
 # All Build rule for target.
-CMakeFiles/BridgeExample.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BridgeExample.dir/build.make CMakeFiles/BridgeExample.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BridgeExample.dir/build.make CMakeFiles/BridgeExample.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/pupok/DesignPattern/bridge/build/CMakeFiles --progress-num=1,2 "Built target BridgeExample"
-.PHONY : CMakeFiles/BridgeExample.dir/all
+CMakeFiles/Bridge.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Bridge.dir/build.make CMakeFiles/Bridge.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Bridge.dir/build.make CMakeFiles/Bridge.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/pupok/DesignPattern/bridge/build/CMakeFiles --progress-num=1,2 "Built target Bridge"
+.PHONY : CMakeFiles/Bridge.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/BridgeExample.dir/rule: cmake_check_build_system
+CMakeFiles/Bridge.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/pupok/DesignPattern/bridge/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/BridgeExample.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Bridge.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/pupok/DesignPattern/bridge/build/CMakeFiles 0
-.PHONY : CMakeFiles/BridgeExample.dir/rule
+.PHONY : CMakeFiles/Bridge.dir/rule
 
 # Convenience name for target.
-BridgeExample: CMakeFiles/BridgeExample.dir/rule
-.PHONY : BridgeExample
+Bridge: CMakeFiles/Bridge.dir/rule
+.PHONY : Bridge
 
 # clean rule for target.
-CMakeFiles/BridgeExample.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BridgeExample.dir/build.make CMakeFiles/BridgeExample.dir/clean
-.PHONY : CMakeFiles/BridgeExample.dir/clean
+CMakeFiles/Bridge.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Bridge.dir/build.make CMakeFiles/Bridge.dir/clean
+.PHONY : CMakeFiles/Bridge.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

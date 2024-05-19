@@ -23,6 +23,15 @@ BridgeExample_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 BridgeExample_SOURCE_DIR:STATIC=/home/pupok/DesignPattern/bridge
 
+//Value Computed by CMake
+Bridge_BINARY_DIR:STATIC=/home/pupok/DesignPattern/bridge/build
+
+//Value Computed by CMake
+Bridge_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+Bridge_SOURCE_DIR:STATIC=/home/pupok/DesignPattern/bridge
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
@@ -154,7 +163,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=BridgeExample
+CMAKE_PROJECT_NAME:STATIC=Bridge
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib

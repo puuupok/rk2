@@ -65,6 +65,16 @@ CMAKE_BINARY_DIR = /home/pupok/DesignPattern/bridge/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -117,24 +127,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named BridgeExample
+# Target rules for targets named Bridge
 
 # Build rule for target.
-BridgeExample: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 BridgeExample
-.PHONY : BridgeExample
+Bridge: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Bridge
+.PHONY : Bridge
 
 # fast build rule for target.
-BridgeExample/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BridgeExample.dir/build.make CMakeFiles/BridgeExample.dir/build
-.PHONY : BridgeExample/fast
+Bridge/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Bridge.dir/build.make CMakeFiles/Bridge.dir/build
+.PHONY : Bridge/fast
 
 bridge.o: bridge.cpp.o
 .PHONY : bridge.o
 
 # target to build an object file
 bridge.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BridgeExample.dir/build.make CMakeFiles/BridgeExample.dir/bridge.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Bridge.dir/build.make CMakeFiles/Bridge.dir/bridge.cpp.o
 .PHONY : bridge.cpp.o
 
 bridge.i: bridge.cpp.i
@@ -142,7 +152,7 @@ bridge.i: bridge.cpp.i
 
 # target to preprocess a source file
 bridge.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BridgeExample.dir/build.make CMakeFiles/BridgeExample.dir/bridge.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Bridge.dir/build.make CMakeFiles/Bridge.dir/bridge.cpp.i
 .PHONY : bridge.cpp.i
 
 bridge.s: bridge.cpp.s
@@ -150,7 +160,7 @@ bridge.s: bridge.cpp.s
 
 # target to generate assembly for a file
 bridge.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BridgeExample.dir/build.make CMakeFiles/BridgeExample.dir/bridge.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Bridge.dir/build.make CMakeFiles/Bridge.dir/bridge.cpp.s
 .PHONY : bridge.cpp.s
 
 # Help Target
@@ -161,7 +171,8 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... BridgeExample"
+	@echo "... test"
+	@echo "... Bridge"
 	@echo "... bridge.o"
 	@echo "... bridge.i"
 	@echo "... bridge.s"
