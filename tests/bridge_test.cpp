@@ -3,10 +3,32 @@
 #include <thread>
 #include <vector>
 
-// Подключение основного файла bridge.cpp
+// Подключение основного файла bridge.h
 #include "bridge.h"
 
-// Тест на создание единственного экземпляра без использования потоков
+TEST(HandsetSoftTest, HandsetGameRun) {
+    HandsetGame game;
+    EXPECT_NO_THROW(game.run());
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_TRUE(output.find("run game") != std::string::npos);
+}
+
+TEST(HandsetSoftTest, HandsetAddressListRun) {
+    HandsetAddressList addressList;
+    EXPECT_NO_THROW(addressList.run());
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_TRUE(output.find("run addressList") != std::string::npos);
+}
+
+TEST(HandsetBrandTest, IphoneRun) {
+    Iphone iphone;
+    HandsetGame game;
+    iphone.setHandsetsoft(&game);
+    EXPECT_NO_THROW(iphone.run());
+    std::string output = testing::internal::GetCapturedStdout();
+    EXPECT_TRUE(output.find("run game") != std::string::npos);
+}
+
 TEST(BridgeTest, SingleInstanceWithoutThreads) {
     Handsetsoft* game = new HandsetGame();
     Handsetsoft* addressList = new HandsetAddressList();
@@ -25,7 +47,6 @@ TEST(BridgeTest, SingleInstanceWithoutThreads) {
     delete addressList;
 }
 
-// Тест на потокобезопасность
 TEST(BridgeTest, ThreadSafety) {
     std::vector<std::thread> threads;
     for (int i = 0; i < 10; ++i) {
@@ -42,7 +63,6 @@ TEST(BridgeTest, ThreadSafety) {
     }
 }
 
-// Тест на создание нескольких экземпляров без обеспечения потокобезопасности
 TEST(BridgeTest, MultipleInstancesWithoutThreadSafety) {
     std::vector<Handsetsoft*> games;
     std::vector<Handsetsoft*> addressLists;
