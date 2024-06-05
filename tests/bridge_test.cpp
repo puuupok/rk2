@@ -2,6 +2,7 @@
 #include "bridge.h"
 
 TEST(HandsetSoftTest, HandsetGameRun) {
+    testing::FLAGS_gtest_catch_exceptions = true;
     HandsetGame game;
     EXPECT_NO_THROW(game.run());
     std::string output = testing::internal::GetCapturedStdout();
@@ -9,6 +10,7 @@ TEST(HandsetSoftTest, HandsetGameRun) {
 }
 
 TEST(HandsetSoftTest, HandsetAddressListRun) {
+    testing::FLAGS_gtest_catch_exceptions = true;
     HandsetAddressList addressList;
     EXPECT_NO_THROW(addressList.run());
     std::string output = testing::internal::GetCapturedStdout();
@@ -16,6 +18,7 @@ TEST(HandsetSoftTest, HandsetAddressListRun) {
 }
 
 TEST(HandsetBrandTest, IphoneRun) {
+    testing::FLAGS_gtest_catch_exceptions = true;
     Iphone iphone;
     HandsetGame game;
     iphone.setHandsetsoft(&game);
@@ -24,9 +27,7 @@ TEST(HandsetBrandTest, IphoneRun) {
     EXPECT_TRUE(output.find("run game") != std::string::npos);
 }
 
-
 int main(int argc, char** argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
-
