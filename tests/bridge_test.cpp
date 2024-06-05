@@ -2,10 +2,8 @@
 #include <iostream>
 #include <thread>
 #include <vector>
-
 // Подключение основного файла bridge.h
 #include "bridge.h"
-
 TEST(HandsetSoftTest, HandsetGameRun) {
     HandsetGame game;
     EXPECT_NO_THROW(game.run());
