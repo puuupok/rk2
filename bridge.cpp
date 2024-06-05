@@ -6,7 +6,6 @@
  ************************************************************************/
 
 #include<iostream>
-#include<string.h>
 #include<bridge.h>
 using namespace std;
 
