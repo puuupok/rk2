@@ -3,8 +3,8 @@
 #include <thread>
 #include <vector>
 
-// Подключение основного файла bridge.cpp
-#include "bridge.cpp"
+// Подключение основного файла bridge.h
+#include "bridge.h"
 
 // Тест на создание единственного экземпляра без использования потоков
 TEST(BridgeTest, SingleInstanceWithoutThreads) {
@@ -68,4 +68,7 @@ TEST(BridgeTest, MultipleInstancesWithoutThreadSafety) {
         delete addressLists[i];
     }
 }
-
+int main(int argc, char** argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
