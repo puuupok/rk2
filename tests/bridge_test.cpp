@@ -25,6 +25,7 @@ TEST(HandsetBrandTest, CleanupTest) {
     HandsetBrand* iphone = new Iphone();
     iphone->setHandsetsoft(new HandsetGame());
     delete iphone;
+    ASSERT_EQ(static_cast<Handsetsoft*>(nullptr), iphone->soft);
 }
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
