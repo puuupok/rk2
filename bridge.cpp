@@ -6,8 +6,9 @@
  ************************************************************************/
 
 #include<iostream>
-using namespace std;
 #include<bridge.h>
+using namespace std;
+
 int main(){
 	HandsetBrand* iphone = new Iphone();
 	iphone->setHandsetsoft(new HandsetGame());
