@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "bridge.cpp"
+#include "bridge.h"
 
 TEST(IphoneTest, RunGame) {
     HandsetBrand* iphone = new Iphone();
@@ -25,4 +25,8 @@ TEST(HandsetBrandTest, CleanupTest) {
     HandsetBrand* iphone = new Iphone();
     iphone->setHandsetsoft(new HandsetGame());
     delete iphone;
+}
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
